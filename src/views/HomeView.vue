@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { RouteNames } from '@/router/routeNames';
 import {Pagination, Autoplay} from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css/pagination';
@@ -8,18 +9,18 @@ const modules = [ Pagination, Autoplay ];
 
 </script>
 <template>
-<div class=" overflow-hidden">
+<div class="text-white text-4xl">
   <swiper
-  class="overflow-hidden"
     :slides-per-view="1"
     :space-between="50"
-    autoplay
     :pagination="{ clickable: true }"
     :modules="modules"
-  >
-    <swiper-slide><div class="h-[90vh] max-h-screen flex items-center justify-center text-center">Slide 1</div></swiper-slide>
-    <swiper-slide><div class="h-[90vh] flex items-center justify-center text-center">Slide 2</div></swiper-slide>
-    <swiper-slide><div class="h-[90vh] flex items-center justify-center text-center">Slide 3</div></swiper-slide>
+    autoplay
+    >
+    <swiper-slide><RouterLink :to="{name: RouteNames.MENS}" class="h-[100vh] flex items-center justify-center text-center before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-mens before:bg-cover before:bg-no-repeat before:-z-10 before:brightness-50">For Men</RouterLink></swiper-slide>
+    <swiper-slide><RouterLink :to="{name: RouteNames.WOMENS}" class="h-[100vh] flex items-center justify-center text-center before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-womens before:bg-cover before:bg-no-repeat before:-z-10 before:brightness-50">For Women</RouterLink></swiper-slide>
+    <swiper-slide><RouterLink :to="{name: RouteNames.JEWELLERY}" class="h-[100vh] flex items-center justify-center text-center before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-jewellery before:bg-cover before:bg-no-repeat before:-z-10 before:brightness-50">Jewellery</RouterLink></swiper-slide>
+    <swiper-slide><RouterLink :to="{name: RouteNames.ELECTRONICS}" class="h-[100vh] flex items-center justify-center text-center before:absolute before:top-0 before:left-0 before:w-full before:h-full before:bg-electronics before:bg-cover before:bg-no-repeat before:-z-10 before:brightness-50">Electronics</RouterLink></swiper-slide>
   </swiper>
 </div>
 </template>

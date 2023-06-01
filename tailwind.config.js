@@ -4,6 +4,12 @@ export const theme = {
   extend: {
     fontFamily: {
       'Inter': ['Inter', 'sans-serif']
+    },
+    backgroundImage: {
+      'mens': "url('@/assets/img/mens.jpg')",
+      'womens': "url('@/assets/img/womens.jpg')",
+      'jewellery': "url('@/assets/img/jewellery.jpg')",
+      'electronics': "url('@/assets/img/electronics.jpg')"
     }
   },
   colors: {
