@@ -10,11 +10,11 @@
     "lib": ["ESNext", "DOM", "DOM.iterable"],
     "target": "ESNext",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "strict": true,
     "skipLibCheck": true,
     "allowJs": false,
-    "ignoreDeprecations": "5.0",
+    "ignoreDeprecations": "5.0"
   },
 
   "references": [
