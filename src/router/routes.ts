@@ -10,8 +10,8 @@ export const routes: RouterOptions["routes"] = [
     {
         path: "/",
         name: RouteNames.HOME,
-        component: () => import("@/views/HomeView.vue"),
-        children: [
+        component: () => import("@/views/HomeView.vue")
+    },
             {
                 path: "/mens",
                 name: RouteNames.MENS,
@@ -42,6 +42,4 @@ export const routes: RouterOptions["routes"] = [
                 name: RouteNames.CART,
                 component: () => import("@/views/CartView.vue")
             }
-        ]
-    },
 ]
