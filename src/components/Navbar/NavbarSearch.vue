@@ -24,10 +24,10 @@ const isOpened = ref(false)
 onClickOutside(list, () => isOpened.value = false)
 </script>
 <template>
-<div class="rounded-md w-48 text-white">
-    <div class="flex gap-1 items-center">
+<div :class="{'text-white': isHome}" class="rounded-md w-48">
+    <div class="input-opacity flex gap-1 items-center">
         <SearchIcon :is-home="isHome" class=" ml-1" />
-        <input class="w-full outline-none rounded-md py-1 px-1 text-white brightness-[75%]" type="text" :placeholder="props.placeholder" @input="emits('update:modelValue', ($event?.target as HTMLInputElement).value)" :value="props.modelValue"  />
+        <input :class="{'placeholder:text-white': isHome}" class="placeholder:text-primary bg-transparent w-full outline-none rounded-md py-1 px-1" type="text" :placeholder="props.placeholder" @input="emits('update:modelValue', ($event?.target as HTMLInputElement).value)" :value="props.modelValue"  />
     </div>
     <div ref="list" v-show="isOpened">
         <div>
@@ -43,5 +43,7 @@ onClickOutside(list, () => isOpened.value = false)
 </div>
 </template>
 <style scoped>
-
+.input-opacity {
+    background-color: rgba(255, 255, 255, 0.24);
+}
 </style>

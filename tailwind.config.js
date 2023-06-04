@@ -14,7 +14,9 @@ export const theme = {
   },
   colors: {
     'white': '#ffffff',
-    'primary': '#887569'
+    'primary': '#887569',
+    'transparent': 'transparent',
+    'grey': 'rgb(0, 0, 0, 25)'
   }
 };
 export const plugins = [];

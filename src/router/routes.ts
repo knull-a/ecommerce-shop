@@ -1,4 +1,4 @@
-import type { RouterOptions } from "vue-router"
+import {type RouterOptions, useRouter } from "vue-router"
 import { RouteNames } from "@/router/routeNames"
 
 export const routes: RouterOptions["routes"] = [

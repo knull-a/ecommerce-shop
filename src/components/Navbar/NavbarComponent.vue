@@ -18,7 +18,7 @@ const isHome = computed(() => route.name === RouteNames.HOME)
 
 </script>
 <template>
-<div class="relative">
+<div class="relative border-b-1">
     <div :class="{'text-white': isHome}" class="fixed w-full z-40 top-0 flex justify-between items-center py-2 px-5">
         <div class="flex gap-6">
             <RouterLink :to="{name: RouteNames.MENS}">
