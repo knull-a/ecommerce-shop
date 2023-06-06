@@ -17,6 +17,11 @@ const searchQuery = ref('')
 
 const isHome = computed(() => route.name === RouteNames.HOME)
 
+
+const isLoggedIn = ref(false)
+
+
+
 </script>
 <template>
 <div class="relative border-b-1">
@@ -44,7 +49,7 @@ const isHome = computed(() => route.name === RouteNames.HOME)
             <NavbarSearch :is-home="isHome" placeholder="Search" v-model="searchQuery" />
             <RouterLink :to="{name: RouteNames.WISHLIST}"><HeartIcon :is-home="isHome" /></RouterLink>
             <RouterLink :to="{name: RouteNames.CART}"><CartIcon :is-home="isHome" /></RouterLink>
-            <ProfileIcon :is-home="isHome" />
+            <ProfileIcon @click="" :is-home="isHome" />
         </div>
     </div>
 </div>
