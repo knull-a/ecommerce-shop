@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useRest } from '@/services';
-import { Product } from '@/services/ProductRest';
+import { type Product } from '@/services/ProductRest';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
