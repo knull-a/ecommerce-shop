@@ -2,13 +2,14 @@ import type { AxiosInstance } from "axios";
 import { BaseRest } from "@/services/baseRest";
 
 export type Product = {
-    id: number,
-    title: string,
-    price: string,
-    category: string,
-    description: string,
-    image:string,
+    id: number
+    title: string
+    price: string
+    category: string
+    description: string
+    image:string
     isHovering: boolean
+    isInWishlist: boolean
 }
 
 export class ProductRest extends BaseRest {

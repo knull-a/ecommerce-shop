@@ -9,7 +9,8 @@ import HeartIcon from "@/assets/icons/HeartIcon.vue"
 import CartIcon from "@/assets/icons/CartIcon.vue"
 import ProfileIcon from "@/assets/icons/ProfileIcon.vue"
 import LogoIcon from "@/assets/icons/LogoIcon.vue"
-
+import history from "@/router/history";
+const navigationHistory = ref(history.get())
 const route = useRoute()
 
 const searchQuery = ref('')

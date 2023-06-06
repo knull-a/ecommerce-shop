@@ -15,7 +15,12 @@ export const routes: RouterOptions["routes"] = [
             {
                 path: "/mens",
                 name: RouteNames.MENS,
-                component: () => import("@/views/MensView.vue")
+                component: () => import("@/views/MensView.vue"),
+            },
+            {
+                path: "/mens/:id",
+                name: RouteNames.PRODUCT,
+                component: () => import("@/views/ProductView.vue")
             },
             {
                 path: "/womens",
