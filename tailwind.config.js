@@ -16,7 +16,8 @@ export const theme = {
     'white': '#ffffff',
     'primary': '#887569',
     'transparent': 'transparent',
-    'grey': 'rgb(0, 0, 0, 25)',
+    'grey': 'rgb(0, 0, 0, 0.5)',
+    'grey-2': '#F8F7F7',
     'error': '#f44336'
   }
 };

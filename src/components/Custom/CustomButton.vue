@@ -6,6 +6,7 @@ type Props = {
   text?: string
   isFull?: boolean
   classes?: string
+  flat?: boolean
 }
 
 const props = defineProps<Props>()
