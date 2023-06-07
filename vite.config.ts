@@ -18,5 +18,12 @@ export default defineConfig({
     port: 8080,
     strictPort: true,
     host: "0.0.0.0",
+  },
+  test: {
+    // enable jest-like global test APIs
+    globals: true,
+    // simulate DOM with happy-dom
+    // (requires installing happy-dom as a peer dependency)
+    environment: 'happy-dom'
   }
 })

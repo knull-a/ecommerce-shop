@@ -39,7 +39,7 @@ watchEffect(async () => {
 
 </script>
 <template>
-    <div class="mt-14 max-w-6xl m-auto">
+    <div class="mt-20 max-w-6xl m-auto">
         <div class="grid grid-cols-3 gap-y-4 m-auto">
             <RouterLink :to="{name: RouteNames.PRODUCT, params: {id: card.id}}" class="text-center relative" v-for="(card, idx) in products" :key="idx"
                 @mouseenter="card.isHovering = true" @mouseleave="card.isHovering = false">
@@ -51,7 +51,7 @@ watchEffect(async () => {
                     </button>
                 </div>
 
-                <p>{{ card.price }}$</p>
+                <p class="mt-2">{{ card.price }}$</p>
                 <p class="text-2xl font-bold">{{ card.title }}</p>
             </RouterLink>
         </div>

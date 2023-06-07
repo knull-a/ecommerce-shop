@@ -48,7 +48,7 @@ const [authModalStatus, toggleAuthModal] = useToggle()
                 </RouterLink>
             </div>
             <div class="flex items-center gap-3">
-                <NavbarSearch :is-home="isHome" placeholder="Search" v-model="searchQuery" />
+                <NavbarSearch :is-home="isHome" />
                 <RouterLink :to="{ name: RouteNames.WISHLIST }">
                     <HeartIcon :is-home="isHome" />
                 </RouterLink>
