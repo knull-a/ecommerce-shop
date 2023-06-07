@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRefs } from 'vue';
 import { useRest } from '@/services';
-import { type Product } from '@/services/ProductRest';
+import { type Product, Instance } from '@/services/ProductRest';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import { useRouter } from 'vue-router';
@@ -9,10 +9,16 @@ import {useProductsStore} from '@/stores/products'
 import { storeToRefs } from 'pinia';
 import BreadCrumbs from "@/components/BreadCrumbs.vue"
 
+type Props = {
+    instance: Instance
+}
+
+const props = defineProps<Props>()
+
 const route = useRoute()
-const router = useRouter()
 const api = useRest()
 const productsStore = useProductsStore()
+
 const {product} = storeToRefs(productsStore)
 
 const isLoading = ref(false)
@@ -31,18 +37,16 @@ watchEffect(async () => {
 
 </script>
 <template>
-<div class="m-20">
+<div class="my-20 mx-40">
     <BreadCrumbs v-if="product.category" :category="product.category" :product="product.title" />
-    <div>
+    <div class="flex max-w-4xl gap-14 items-center mt-8 m-auto">
         <img class=" w-96" :src="product.image" alt="">
 
         <div>
-            <h2>{{ product.title }}</h2>
+            <h2 class="text-4xl">{{ product.title }}</h2>
+            <p class="text-grey">- {{ product.category }}</p>
             <p>{{ product.description }}</p>
         </div>
     </div>
 </div>
 </template>
-<style scoped>
-
-</style>

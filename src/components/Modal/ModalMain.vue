@@ -30,11 +30,11 @@ onClickOutside(modalElement, () => {
 <Teleport to="#modal-container">
     <Transition name="modal">
         <div class="fixed top-0 left-0 z-[9999] h-screen w-screen bg-grey" v-show="props.status">
-            <div ref="modalElement" class="z-[99999] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-4 max-w-4xl bg-white rounded-xl">
+            <div ref="modalElement" class="z-[99999] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-8 max-w-4xl bg-white rounded-xl">
                 <div>
                     <div class="flex justify-between gap-10">
-                        <h3 class=" text-lg">{{ showModalHeader }}</h3>
-                        <button class="" @click="closeModal">
+                        <h3 class="text-center text-lg mb-2">{{ showModalHeader }}</h3>
+                        <button class="absolute top-4 right-4" @click="closeModal">
                             <CloseIcon />
                         </button>
                     </div>

@@ -52,7 +52,7 @@ const onSubmit = handleSubmit((values) => {
         </div>
       </div>
       <CustomButton type="submit" text="Login" is-full />
-      <CustomButton classes="bg-transparent text-grey border border-primary" type="button" text="Sign in with Google" is-full />
+      <CustomButton classes="bg-transparent text-primary border border-primary" type="button" text="Sign in with Google" is-full />
     </form>
   </div>
 </template>
