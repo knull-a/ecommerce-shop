@@ -32,8 +32,9 @@ const searchField = ref('')
 
 const list = ref<HTMLDivElement>()
 
-const pushToProduct = (productId: number) => {
-  router.push({ name: RouteNames.PRODUCT, params: { id: productId } })
+const pushToProduct = (productId: number, productCategory: string) => {
+  const category = productCategory.split(' ')[0].charAt(0).toUpperCase() + productCategory.split(' ')[0].slice(1)
+  router.push({ name: category, params: { id: productId } })
   isOpened.value = false
 }
 
@@ -59,12 +60,12 @@ onClickOutside(list, () => isOpened.value = false)
         class="placeholder:text-primary bg-transparent w-full outline-none rounded-md py-1 px-1" type="text"
         v-model="searchField" placeholder="Search" />
     </div>
-    <div class="absolute input-opacity w-48 max-h-32 rounded-lg overflow-auto" ref="list">
+    <div class="absolute input-opacity w-48 max-h-32 rounded-lg overflow-x-hidden" ref="list">
       <div v-show="isLoading" class="py-2 px-3">Loading...</div>
       <div v-show="isOpened">
-        <div @click="pushToProduct(product.id)" class="cursor-pointer hover:backdrop-brightness-125 py-2 px-3"
+        <div @click="pushToProduct(product.id, product.category)" class="cursor-pointer hover:backdrop-brightness-125 py-2 px-3"
           v-for="product in filteredProducts" :key="product.id">
-          {{ product.title }}
+          {{ product.title }} {{   }}
         </div>
       </div>
     </div>
