@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, computed } from 'vue';
 import { onClickOutside } from "@vueuse/core"
 
 import SearchIcon from '@/assets/icons/SearchIcon.vue';
@@ -7,6 +7,9 @@ import SearchIcon from '@/assets/icons/SearchIcon.vue';
 import { useProductsStore } from '@/stores/products';
 import { storeToRefs } from 'pinia';
 import { useRest } from '@/services';
+import type { Product } from '@/services/ProductRest';
+import { useRouter, type RouterLink } from 'vue-router';
+import { RouteNames } from '@/router/routeNames';
 
 type Props = {
   isHome: boolean
@@ -17,6 +20,7 @@ const props = defineProps<Props>()
 const api = useRest()
 
 const productsStore = useProductsStore()
+const router = useRouter()
 
 const { getProducts } = useProductsStore()
 
@@ -28,40 +32,38 @@ const searchField = ref('')
 
 const list = ref<HTMLDivElement>()
 
-const showSearchList = () => {
-  isLoading.value = true
-  products.value = products.value.filter((product) =>
-    product.title != searchField.value
-  )
-  isLoading.value = false
-  isOpened.value = true
+const pushToProduct = (productId: number) => {
+  router.push({ name: RouteNames.PRODUCT, params: { id: productId } })
+  isOpened.value = false
 }
 
-watch(searchField, () => {
-  console.log('hello')
-  products.value = []
-  showSearchList()
-})
+const filteredProducts = computed(() =>
+  products.value.filter(item => item.title.toLowerCase().includes(searchField.value.toLowerCase()))
+)
 
-onMounted(() => {
+onMounted(() =>
   getProducts()
-})
+)
+
+watch(searchField, () =>
+  isOpened.value = true
+)
 
 onClickOutside(list, () => isOpened.value = false)
 </script>
 <template>
   <div :class="{ 'text-white': isHome }" class="rounded-md w-48">
     <div class="input-opacity flex gap-1 items-center rounded-lg mb-1">
-      {{ searchField }}
       <SearchIcon :is-home="isHome" class=" ml-1" />
-      <input @click="showSearchList()" :class="{ 'placeholder:text-white': isHome }"
+      <input :class="{ 'placeholder:text-white': isHome }"
         class="placeholder:text-primary bg-transparent w-full outline-none rounded-md py-1 px-1" type="text"
         v-model="searchField" placeholder="Search" />
     </div>
     <div class="absolute input-opacity w-48 max-h-32 rounded-lg overflow-auto" ref="list">
       <div v-show="isLoading" class="py-2 px-3">Loading...</div>
       <div v-show="isOpened">
-        <div class="cursor-pointer hover:backdrop-brightness-125 py-2 px-3" v-for="product in products" :key="product.id">
+        <div @click="pushToProduct(product.id)" class="cursor-pointer hover:backdrop-brightness-125 py-2 px-3"
+          v-for="product in filteredProducts" :key="product.id">
           {{ product.title }}
         </div>
       </div>
