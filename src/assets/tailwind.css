@@ -3,8 +3,23 @@
 @tailwind utilities;
 
 @layer base {
-    html {
-        @apply text-primary;
-        font-family: 'Inter', sans-serif;
-    }
+  html {
+    @apply text-primary;
+    font-family: "Inter", sans-serif;
+  }
+}
+
+@layer utilities {
+  .loading {
+    @apply bg-grey bg-gradient-to-r from-transparent via-grey to-transparent;
+    background-size: 200% 100%;
+    background-position-x: 180%;
+    animation: loading 0.5s ease-in-out infinite;
+    border-radius: 11px;
+  }
+}
+@keyframes loading {
+  to {
+    background-position-x: -20%;
+  }
 }

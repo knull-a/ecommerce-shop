@@ -1,7 +1,7 @@
 <template>
     <nav>
         <ul class="flex items-center gap-2">
-
+            {{ route.path }}
             <li @click="routePath(crumb)" class="flex items-center gap-2 cursor-pointer" v-for="crumb in breadCrumbs"
                 :key="crumb.id">
                 {{ crumb.title }}
