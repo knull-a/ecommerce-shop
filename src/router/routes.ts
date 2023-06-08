@@ -1,5 +1,5 @@
 import { type RouterOptions } from "vue-router";
-import { Instance } from "@/services/ProductRest"; 
+import { Instance } from "@/services/ProductRest";
 import { RouteNames } from "@/router/routeNames";
 
 export const routes: RouterOptions["routes"] = [
@@ -18,12 +18,13 @@ export const routes: RouterOptions["routes"] = [
     name: RouteNames.MENS,
     component: () => import("@/views/CategoryView.vue"),
     props: {
-        instance: Instance.Mens
-    }
+      instance: Instance.Mens,
+      routeName: RouteNames.PRODUCT_MEN,
+    },
   },
   {
     path: "/mens/:id",
-    name: RouteNames.PRODUCT,
+    name: RouteNames.PRODUCT_MEN,
     component: () => import("@/views/ProductView.vue"),
   },
   {
@@ -31,12 +32,13 @@ export const routes: RouterOptions["routes"] = [
     name: RouteNames.WOMENS,
     component: () => import("@/views/CategoryView.vue"),
     props: {
-        instance: Instance.Womens
-    }
+      instance: Instance.Womens,
+      routeName: RouteNames.PRODUCT_WOMEN,
+    },
   },
   {
     path: "/womens/:id",
-    name: RouteNames.PRODUCT,
+    name: RouteNames.PRODUCT_WOMEN,
     component: () => import("@/views/ProductView.vue"),
   },
   {
@@ -44,12 +46,13 @@ export const routes: RouterOptions["routes"] = [
     name: RouteNames.JEWELLERY,
     component: () => import("@/views/CategoryView.vue"),
     props: {
-        instance: Instance.Jewellery
-    }
+      instance: Instance.Jewellery,
+      routeName: RouteNames.PRODUCT_JEWELLERY
+    },
   },
   {
     path: "/jewellery/:id",
-    name: RouteNames.PRODUCT,
+    name: RouteNames.PRODUCT_JEWELLERY,
     component: () => import("@/views/ProductView.vue"),
   },
   {
@@ -57,12 +60,13 @@ export const routes: RouterOptions["routes"] = [
     name: RouteNames.ELECTRONICS,
     component: () => import("@/views/CategoryView.vue"),
     props: {
-        instance: Instance.Electronics
-    }
+      instance: Instance.Electronics,
+      routeName: RouteNames.PRODUCT_ELECTRONICS
+    },
   },
   {
     path: "/electronics/:id",
-    name: RouteNames.PRODUCT,
+    name: RouteNames.PRODUCT_ELECTRONICS,
     component: () => import("@/views/ProductView.vue"),
   },
   {

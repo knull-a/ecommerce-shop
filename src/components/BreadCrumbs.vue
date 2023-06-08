@@ -1,16 +1,3 @@
-<template>
-    <nav>
-        <ul class="flex items-center gap-2">
-            {{ route.path }}
-            <li @click="routePath(crumb)" class="flex items-center gap-2 cursor-pointer" v-for="crumb in breadCrumbs"
-                :key="crumb.id">
-                {{ crumb.title }}
-                <ChevronIcon v-if="crumb.id !== 2" />
-            </li>
-        </ul>
-    </nav>
-</template>
-
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { RouteNames } from '@/router/routeNames';
@@ -57,3 +44,15 @@ const breadCrumbs = ref<Crumb[]>([
 ])
 
 </script>
+<template>
+    <nav>
+        <ul class="flex items-center gap-2">
+            <li @click="routePath(crumb)" class="flex items-center gap-2 cursor-pointer" v-for="crumb in breadCrumbs"
+                :key="crumb.id">
+                {{ crumb.title }}
+                <ChevronIcon v-if="crumb.id !== 2" />
+            </li>
+        </ul>
+    </nav>
+</template>
+

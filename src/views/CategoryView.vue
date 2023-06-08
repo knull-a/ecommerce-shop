@@ -12,6 +12,7 @@ import HeartAnimatedIcon from '@/assets/icons/HeartAnimatedIcon.vue';
 
 type Props = {
   instance: Instance
+  routeName: RouteNames
 }
 
 const props = defineProps<Props>()
@@ -45,7 +46,7 @@ watchEffect(async () => {
 <template>
   <div class="mt-20 max-w-6xl m-auto">
     <div v-if="!isLoading" class="grid grid-cols-3 gap-y-4 m-auto">
-      <RouterLink :to="{ name: RouteNames.PRODUCT, params: { id: card.id } }" class="text-center relative"
+      <RouterLink :to="{ name: routeName, params: { id: card.id } }" class="text-center relative"
         v-for="(card, idx) in products" :key="idx" @mouseenter="card.isHovering = true"
         @mouseleave="card.isHovering = false">
         <div>
