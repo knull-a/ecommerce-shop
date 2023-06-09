@@ -11,6 +11,8 @@ type Props = {
 
 const props = defineProps<Props>()
 
+const defaultClasses = 'py-1 px-2 inline-block bg-primary text-white rounded-lg hover:brightness-110'
+
 const combinedClasses = computed(() => {
   const classes: { [key: string]: boolean } = {
     'w-full': props.isFull
@@ -22,8 +24,7 @@ const combinedClasses = computed(() => {
 })
 </script>
 <template>
-  <button class="py-1 px-2 inline-block bg-primary text-white rounded-lg hover:brightness-110" :class="combinedClasses"
-    :type="props.type">
+  <button :class="[defaultClasses, combinedClasses]" :type="props.type">
     <span>{{ text }}</span>
   </button>
 </template>

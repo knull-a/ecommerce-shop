@@ -1,28 +1,40 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
-import NavbarSearch from '@/components/Navbar/NavbarSearch.vue';
-import { useRoute } from "vue-router";
+import { useRoute, useRouter, RouterLink } from "vue-router";
+import { onAuthStateChanged, getAuth } from "firebase/auth"
 import { useToggle } from "@vueuse/core";
+import { useUsersStore } from "@/stores/user"
 import { RouteNames } from '@/router/routeNames';
-import { RouterLink } from 'vue-router';
 
+import NavbarSearch from '@/components/Navbar/NavbarSearch.vue';
+import history from "@/router/history";
+import ModalMain from "@/components/Modal/ModalMain.vue";
+import ModalAuth from "@/components/Modal/ModalAuth.vue";
+import { storeToRefs } from "pinia";
 import HeartIcon from "@/assets/icons/HeartIcon.vue"
 import CartIcon from "@/assets/icons/CartIcon.vue"
 import ProfileIcon from "@/assets/icons/ProfileIcon.vue"
 import LogoIcon from "@/assets/icons/LogoIcon.vue"
-import history from "@/router/history";
-import ModalMain from "@/components/Modal/ModalMain.vue";
-import ModalAuth from "@/components/Modal/ModalAuth.vue";
+
 const navigationHistory = ref(history.get())
 const route = useRoute()
+const router = useRouter()
 
-const searchQuery = ref('')
-
+const userStore = useUsersStore()
+const { isLoggedIn } = storeToRefs(userStore)
 const isHome = computed(() => route.name === RouteNames.HOME)
 
-const isLoggedIn = ref(false)
-
 const [authModalStatus, toggleAuthModal] = useToggle()
+
+const showProfile = () => {
+    onAuthStateChanged(getAuth(), (user) => {
+        if (user) {
+            router.push({ name: RouteNames.PROFILE })
+            return
+        }
+        toggleAuthModal()
+    })
+}
 
 </script>
 <template>
@@ -55,10 +67,11 @@ const [authModalStatus, toggleAuthModal] = useToggle()
                 <RouterLink :to="{ name: RouteNames.CART }">
                     <CartIcon :is-home="isHome" />
                 </RouterLink>
-                <ProfileIcon @click="toggleAuthModal()" :is-home="isHome" />
+                <ProfileIcon @click="showProfile()" :is-home="isHome" />
                 <ModalMain :status="authModalStatus" @close-modal="toggleAuthModal()" header-title="Войти в аккаунт">
                     <ModalAuth />
                 </ModalMain>
             </div>
         </div>
-</div></template>
+    </div>
+</template>

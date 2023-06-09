@@ -10,5 +10,6 @@ export const enum RouteNames {
     JEWELLERY = "Jewelery",
     ELECTRONICS = "Electronics",
     WISHLIST = "Wishlist",
-    CART = "Cart"
+    CART = "Cart",
+    PROFILE = "Profile"
 }

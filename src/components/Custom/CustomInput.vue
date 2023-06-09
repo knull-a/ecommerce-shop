@@ -28,14 +28,11 @@ const {
 
 </script>
 <template>
-    <div class="w-full" :class="{ 'border border-error': !!errorMessage }">
+    <div class="w-full">
         <label :for="name">{{ label }}</label>
-        <input class=" w-full outline-none rounded-md bg-grey-2 py-3 px-4" :name="name" :id="name" :type="type" :value="inputValue" :placeholder="placeholder" @input="handleChange" @blur="handleBlur" />
-
-        <p class="" v-show="errorMessage">
-            {{ errorMessage }}
-        </p>
+        <input class="w-full outline-none rounded-md bg-grey-2 py-3 px-4" :class="{ 'border border-error': !!errorMessage }"
+            :name="name" :id="name" :type="type" :value="inputValue" :placeholder="placeholder" @input="handleChange"
+            @blur="handleBlur" />
     </div>
 </template>
-<style scoped>
-</style>
+<style scoped></style>

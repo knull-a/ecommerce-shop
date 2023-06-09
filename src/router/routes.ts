@@ -70,6 +70,11 @@ export const routes: RouterOptions["routes"] = [
     component: () => import("@/views/ProductView.vue"),
   },
   {
+    path: "/profile",
+    name: RouteNames.PROFILE,
+    component: () => import("@/views/UserView.vue"),
+  },
+  {
     path: "/wishlist",
     name: RouteNames.WISHLIST,
     component: () => import("@/views/WishlistView.vue"),

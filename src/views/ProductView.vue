@@ -8,12 +8,7 @@ import { useRouter } from 'vue-router';
 import { useProductsStore } from '@/stores/products'
 import { storeToRefs } from 'pinia';
 import BreadCrumbs from "@/components/BreadCrumbs.vue"
-
-type Props = {
-    instance: Instance
-}
-
-const props = defineProps<Props>()
+import {auth} from "@/data"
 
 const route = useRoute()
 const api = useRest()
@@ -69,8 +64,3 @@ watchEffect(async () => {
         </div>
     </div>
 </template>
-<style scoped>
-/* .loading {
-    @apply flex items-center justify-center bg-gradient-to-r from-transparent via-grey to-transparent bg-gradient-to-r from-blue-500 to-green-500 bg-cover bg-repeat-x animate-pulse
-} */
-</style>

@@ -12,13 +12,7 @@ const credentials = ref({
 })
 
 const register = () => {
-    createUserWithEmailAndPassword(auth, credentials.value.email, credentials.value.password).then((data) => {
-        console.log('registered ')
-        router.push("/")
-    })
-    .catch((error) => {
-        console.error(error)
-    })
+    
 }
 
 const signInWithGoogle = () => {
