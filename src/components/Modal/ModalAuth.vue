@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { FirebaseError } from 'firebase/app';
 import { ref } from 'vue';
 import * as yup from 'yup'
 import { useForm } from 'vee-validate';
@@ -6,18 +7,17 @@ import CustomButton from '@/components/Custom/CustomButton.vue';
 import CustomInput from "@/components/Custom/CustomInput.vue";
 import { auth } from '@/data';
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import type { FirebaseError } from 'firebase/app';
 import { useRouter } from 'vue-router';
+import { RouteNames } from '@/router/routeNames';
 
-type Auth = {
-  email: string
-  password: string
-  confirm_password?: string
+type Emits = {
+  (e: 'toggleModal'): void
 }
+
+const emit = defineEmits<Emits>()
 
 const router = useRouter()
 
-const isSignUp = ref(false)
 
 const validationSchema =
   yup.object().shape({
@@ -34,9 +34,9 @@ const { handleSubmit } = useForm({
 
 const onSubmit = handleSubmit((values) => {
   signInWithEmailAndPassword(auth, values.email, values.password).then((data) => {
-    console.log('registered')
     console.log(auth.currentUser)
-    router.push("/")
+    emit('toggleModal')
+    router.push({ name: RouteNames.PROFILE })
   })
     .catch((error) => {
       const e = error as FirebaseError

@@ -2,13 +2,19 @@
 import { type Product, Instance } from '@/services/ProductRest';
 
 import { ref, toRefs, watchEffect } from 'vue';
-import { RouterLink, useRoute, useRouter } from 'vue-router';
+import { RouterLink } from 'vue-router';
+
+import { updateDoc, doc } from 'firebase/firestore';
+
+import { db } from '@/data';
 
 import { useRest } from '@/services';
+import { useUsersStore } from '@/stores/user';
 
 import { RouteNames } from '@/router/routeNames';
 
 import HeartAnimatedIcon from '@/assets/icons/HeartAnimatedIcon.vue';
+import { storeToRefs } from 'pinia';
 
 type Props = {
   instance: Instance
@@ -17,12 +23,30 @@ type Props = {
 
 const props = defineProps<Props>()
 
+const { currentUser } = storeToRefs(useUsersStore())
+
 const { instance } = toRefs(props)
 const isLoading = ref(false)
 
 const api = useRest()
 
 const products = ref<Product[]>([])
+
+const addToWishlist = async (card: Product) => {
+  if (card.isInWishlist) {
+    card.isInWishlist = false
+    return
+  }
+  try {
+    await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
+      cart: [card.id]
+    })
+  } catch (error) {
+    console.error(error)
+  }
+  console.log(card.id, currentUser.value?.uid)
+  card.isInWishlist = true
+}
 
 watchEffect(async () => {
   try {
@@ -51,7 +75,7 @@ watchEffect(async () => {
         @mouseleave="card.isHovering = false">
         <div>
           <img class="h-[200px] w-[350px] object-contain m-auto" :src="card.image" alt="Card Item">
-          <button class="absolute -top-10 right-0" @click.prevent="card.isInWishlist = !card.isInWishlist"
+          <button class="absolute -top-10 right-0" @click.prevent="addToWishlist(card)"
             :style="{ opacity: card.isHovering ? 1 : 0 }">
             <HeartAnimatedIcon :is-active="card.isInWishlist" />
           </button>
@@ -76,4 +100,5 @@ watchEffect(async () => {
 
   </div>
 </template>
-<style scoped></style>
+<style scoped>
+</style>

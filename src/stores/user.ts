@@ -1,17 +1,19 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, type User } from "firebase/auth";
+
+type UserObject = {
+  id: string
+  username: string
+  cart: string[]
+  wishlist: string[]
+}
+
 export const useUsersStore = defineStore("user", () => {
   const isLoggedIn = ref(false);
+  const currentUser = ref<User>()
   const auth = ref(getAuth());
+  const user = ref<UserObject>()
 
-  const checkAuthState = () => {
-
-    onAuthStateChanged(getAuth(), (user) => {
-      user ? (isLoggedIn.value = true) : (isLoggedIn.value = false);
-    });
-  }
-
-
-  return { isLoggedIn, checkAuthState };
+  return { isLoggedIn, currentUser, user };
 });

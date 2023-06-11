@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { onAuthStateChanged, getAuth } from "firebase/auth"
+import { db } from "@/data";
+import { getDocs, collection } from "firebase/firestore";
+import { storeToRefs } from "pinia";
 import { useToggle } from "@vueuse/core";
 import { useUsersStore } from "@/stores/user"
 import { RouteNames } from '@/router/routeNames';
@@ -10,7 +13,7 @@ import NavbarSearch from '@/components/Navbar/NavbarSearch.vue';
 import history from "@/router/history";
 import ModalMain from "@/components/Modal/ModalMain.vue";
 import ModalAuth from "@/components/Modal/ModalAuth.vue";
-import { storeToRefs } from "pinia";
+
 import HeartIcon from "@/assets/icons/HeartIcon.vue"
 import CartIcon from "@/assets/icons/CartIcon.vue"
 import ProfileIcon from "@/assets/icons/ProfileIcon.vue"
@@ -21,7 +24,7 @@ const route = useRoute()
 const router = useRouter()
 
 const userStore = useUsersStore()
-const { isLoggedIn } = storeToRefs(userStore)
+const { currentUser, user } = storeToRefs(userStore)
 const isHome = computed(() => route.name === RouteNames.HOME)
 
 const [authModalStatus, toggleAuthModal] = useToggle()
@@ -35,6 +38,22 @@ const showProfile = () => {
         toggleAuthModal()
     })
 }
+
+watch(currentUser, async () => {
+    const querySnapshot = await getDocs(collection(db, "users"));
+    console.log(querySnapshot)
+    querySnapshot.forEach((doc) => {
+        if (doc.data().id === currentUser.value?.uid) {
+            user.value = {
+                id: doc.data().id,
+                username: doc.data().username,
+                wishlist: doc.data().wishlist,
+                cart: doc.data().cart
+            }
+        }
+    })
+    console.log('mounted navbar')
+}, {immediate: true})
 
 </script>
 <template>
@@ -67,9 +86,9 @@ const showProfile = () => {
                 <RouterLink :to="{ name: RouteNames.CART }">
                     <CartIcon :is-home="isHome" />
                 </RouterLink>
-                <ProfileIcon @click="showProfile()" :is-home="isHome" />
+                <ProfileIcon @click="showProfile" :is-home="isHome" />
                 <ModalMain :status="authModalStatus" @close-modal="toggleAuthModal()" header-title="Войти в аккаунт">
-                    <ModalAuth />
+                    <ModalAuth @toggleModal="toggleAuthModal()" />
                 </ModalMain>
             </div>
         </div>
