@@ -22,6 +22,7 @@ const handleSignOut = () => {
 // const user = ref<UserObject | DocumentData>()
 
 onMounted(async () => {
+  getAuth()
   onAuthStateChanged(getAuth(), (user) => {
     if (!user) {
       router.push("/")
@@ -35,13 +36,13 @@ onMounted(async () => {
 </script>
 <template>
   <div class="flex mt-28">
-    <div class="m-auto max-w-3xl" v-if="currentUser">
+    <div class="m-auto max-w-3xl" v-if="currentUser && user">
       <div class="border rounded-xl max-w-lg text-center p-5">
         <div class=" w-12 h-12 bg-primary text-white m-auto rounded-full flex items-center justify-center text-3xl">{{
           currentUser.email?.charAt(0) }}</div>
         <p class=" text-2xl font-bold">{{ currentUser.email }}</p>
         <p>{{ currentUser.uid }}</p>
-        {{ user?.cart }}
+        {{ user.wishlist }}
         <button @click="handleSignOut()">Logout</button>
       </div>
     </div>

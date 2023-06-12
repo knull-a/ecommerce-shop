@@ -36,6 +36,7 @@ const pushToProduct = (productId: number, productCategory: string) => {
   const category = productCategory.split(' ')[0].charAt(0).toUpperCase() + productCategory.split(' ')[0].slice(1)
   router.push({ name: category, params: { id: productId } })
   isOpened.value = false
+  console.log(category)
 }
 
 const filteredProducts = computed(() =>

@@ -2,7 +2,7 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter, RouterLink } from "vue-router";
 import { onAuthStateChanged, getAuth } from "firebase/auth"
-import { db } from "@/data";
+import { db, auth } from "@/data";
 import { getDocs, collection } from "firebase/firestore";
 import { storeToRefs } from "pinia";
 import { useToggle } from "@vueuse/core";
@@ -24,6 +24,7 @@ const route = useRoute()
 const router = useRouter()
 
 const userStore = useUsersStore()
+const {updateUser} = userStore
 const { currentUser, user } = storeToRefs(userStore)
 const isHome = computed(() => route.name === RouteNames.HOME)
 
@@ -40,20 +41,18 @@ const showProfile = () => {
 }
 
 watch(currentUser, async () => {
-    const querySnapshot = await getDocs(collection(db, "users"));
-    console.log(querySnapshot)
-    querySnapshot.forEach((doc) => {
-        if (doc.data().id === currentUser.value?.uid) {
-            user.value = {
-                id: doc.data().id,
-                username: doc.data().username,
-                wishlist: doc.data().wishlist,
-                cart: doc.data().cart
-            }
+    onAuthStateChanged(getAuth(), (user) => {
+        if (!user) {
+            router.push("/")
         }
+        if (auth.currentUser) {
+            currentUser.value = auth.currentUser
+        }
+        console.log(auth.currentUser)
     })
+    updateUser()
     console.log('mounted navbar')
-}, {immediate: true})
+}, { immediate: true })
 
 </script>
 <template>

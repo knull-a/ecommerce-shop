@@ -4,17 +4,18 @@ import { type Product, Instance } from '@/services/ProductRest';
 import { ref, toRefs, watchEffect } from 'vue';
 import { RouterLink } from 'vue-router';
 
-import { updateDoc, doc } from 'firebase/firestore';
+import { updateDoc, doc, arrayRemove, arrayUnion } from 'firebase/firestore';
 
 import { db } from '@/data';
 
 import { useRest } from '@/services';
-import { useUsersStore } from '@/stores/user';
+import { type UserObject, useUsersStore } from '@/stores/user';
 
 import { RouteNames } from '@/router/routeNames';
 
 import HeartAnimatedIcon from '@/assets/icons/HeartAnimatedIcon.vue';
 import { storeToRefs } from 'pinia';
+import { updateCurrentUser } from 'firebase/auth';
 
 type Props = {
   instance: Instance
@@ -23,7 +24,8 @@ type Props = {
 
 const props = defineProps<Props>()
 
-const { currentUser } = storeToRefs(useUsersStore())
+const {updateUser} = useUsersStore()
+const { currentUser, user } = storeToRefs(useUsersStore())
 
 const { instance } = toRefs(props)
 const isLoading = ref(false)
@@ -34,13 +36,22 @@ const products = ref<Product[]>([])
 
 const addToWishlist = async (card: Product) => {
   if (card.isInWishlist) {
+    try {
+      await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
+        wishlist: arrayRemove(card.id)
+      })
+      updateUser()
+    } catch (error) {
+      console.error(error)
+    }
     card.isInWishlist = false
     return
   }
   try {
     await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
-      cart: [card.id]
+      wishlist: arrayUnion(card.id)
     })
+    updateUser()
   } catch (error) {
     console.error(error)
   }
@@ -50,15 +61,17 @@ const addToWishlist = async (card: Product) => {
 
 watchEffect(async () => {
   try {
-    isLoading.value = true
-    const res = await api.product.getCategory(instance.value)
-    products.value = res.map((item) => {
-      return {
-        ...item,
-        isHovering: false,
-        isInWishlist: false
-      }
-    })
+    if (user.value) {
+      isLoading.value = true
+      const res = await api.product.getCategory(instance.value)
+      products.value = res.map((item) => {
+        return {
+          ...item,
+          isHovering: false,
+          isInWishlist: (user?.value as UserObject).wishlist.map(String).includes(String(item.id))
+        }
+      })
+    }
   } catch (error) {
     console.error(error)
   } finally {
@@ -100,5 +113,4 @@ watchEffect(async () => {
 
   </div>
 </template>
-<style scoped>
-</style>
+<style scoped></style>
