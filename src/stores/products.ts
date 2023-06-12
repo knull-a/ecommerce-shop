@@ -22,6 +22,6 @@ export const useProductsStore = defineStore("products", () => {
 
   const getProducts = async () =>
     (products.value = await api.product.getProducts());
-
+  
   return { products, product, getProducts };
 });

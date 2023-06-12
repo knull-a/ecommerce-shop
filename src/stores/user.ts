@@ -12,8 +12,8 @@ import {
 export type UserObject = {
   id: string;
   username: string;
-  cart: string[];
-  wishlist: string[];
+  cart: number[];
+  wishlist: number[];
 };
 
 export const useUsersStore = defineStore("user", () => {

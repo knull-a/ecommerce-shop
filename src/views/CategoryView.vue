@@ -40,7 +40,7 @@ const addToWishlist = async (card: Product) => {
       await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
         wishlist: arrayRemove(card.id)
       })
-      updateUser()
+      await updateUser()
     } catch (error) {
       console.error(error)
     }
@@ -48,10 +48,11 @@ const addToWishlist = async (card: Product) => {
     return
   }
   try {
+    console.log(currentUser.value)
     await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
       wishlist: arrayUnion(card.id)
     })
-    updateUser()
+    await updateUser()
   } catch (error) {
     console.error(error)
   }
@@ -100,9 +101,7 @@ watchEffect(async () => {
     </div>
     <div v-else class="grid grid-cols-3 gap-y-4 m-auto">
       <div v-for="card in 6">
-        <div class="h-[200px] w-[350px] m-auto loading">
-
-        </div>
+        <div class="h-[200px] w-[350px] m-auto loading" />
         <div class="flex flex-col gap-1 mt-1 ">
           <p class="loading w-[100px] h-2 m-auto"></p>
           <p class="loading w-[200px] h-2 m-auto"></p>
