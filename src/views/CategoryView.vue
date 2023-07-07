@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { type Product, Instance } from '@/services/ProductRest';
+import { type UserObject, useUsersStore } from '@/stores/user';
 
 import { ref, toRefs, watchEffect } from 'vue';
 import { RouterLink } from 'vue-router';
@@ -9,9 +10,9 @@ import { updateDoc, doc, arrayRemove, arrayUnion } from 'firebase/firestore';
 import { db } from '@/data';
 
 import { useRest } from '@/services';
-import { type UserObject, useUsersStore } from '@/stores/user';
-
 import { RouteNames } from '@/router/routeNames';
+
+import CustomButton from '@/components/Custom/CustomButton.vue';
 
 import HeartAnimatedIcon from '@/assets/icons/HeartAnimatedIcon.vue';
 import { storeToRefs } from 'pinia';
@@ -69,7 +70,7 @@ watchEffect(async () => {
         return {
           ...item,
           isHovering: false,
-          isInWishlist: (user?.value as UserObject).wishlist.map(String).includes(String(item.id))
+          isInWishlist: (user?.value as UserObject).wishlist.map(String).includes(String(item.id)),
         }
       })
     }

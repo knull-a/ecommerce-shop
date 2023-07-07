@@ -25,6 +25,12 @@ const wishlist = computed(() =>
   )
 )
 
+const cart = computed(() =>
+  products.value.filter((product) =>
+    user.value?.cart.includes(product.id)
+  )
+)
+
 const handleSignOut = () => {
   signOut(auth).then(() => {
     router.push("/")
@@ -58,11 +64,20 @@ onMounted(async () => {
         <button @click="handleSignOut()">Logout</button>
       </div>
     </div>
-    <div class="flex flex-col gap-4 m-auto max-w-lg text-center p-5">
-      <h2 class="text-3xl font-bold">Wishlist</h2>
-      <div class="" v-for="item in wishlist" :key="item.id">
-        <img class="h-[200px] w-[170px] m-auto" :src="item.image" alt="Product">
-        <h3 class="text-2xl font-bold">{{ item.title }}</h3>
+    <div class="flex gap-10">
+      <div class="flex flex-col gap-4 m-auto max-w-lg text-center p-5">
+        <h2 class="text-3xl font-bold">Wishlist</h2>
+        <div class="" v-for="item in wishlist" :key="item.id">
+          <img class="h-[200px] w-[170px] m-auto" :src="item.image" alt="Product">
+          <h3 class="text-2xl font-bold">{{ item.title }}</h3>
+        </div>
+      </div>
+      <div class="flex flex-col gap-4 m-auto max-w-lg text-center p-5">
+        <h2 class="text-3xl font-bold">Cart</h2>
+        <div class="" v-for="item in cart" :key="item.id">
+          <img class="h-[200px] w-[170px] m-auto" :src="item.image" alt="Product">
+          <h3 class="text-2xl font-bold">{{ item.title }}</h3>
+        </div>
       </div>
     </div>
   </div>

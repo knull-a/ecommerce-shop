@@ -10,6 +10,7 @@ export type Product = {
   image: string;
   isHovering: boolean;
   isInWishlist: boolean;
+  isInCart: boolean
 };
 
 export enum Instance {

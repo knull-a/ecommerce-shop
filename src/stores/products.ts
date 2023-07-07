@@ -18,10 +18,12 @@ export const useProductsStore = defineStore("products", () => {
     image: "",
     isHovering: false,
     isInWishlist: false,
+    isInCart: false
   })
 
   const getProducts = async () =>
     (products.value = await api.product.getProducts());
+    
   
   return { products, product, getProducts };
 });
