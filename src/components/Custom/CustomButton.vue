@@ -1,30 +1,33 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
+type Variation = 'default' | 'flat' | 'outlined';
+
 type Props = {
   type: 'button' | 'submit' | 'reset'
   text?: string
   isFull?: boolean
-  classes?: string
-  flat?: boolean
+  variation?: Variation
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  type: 'button',
+  variation: 'default'
+})
 
-const defaultClasses = 'py-1 px-2 inline-block bg-primary text-white rounded-lg hover:brightness-110'
-
-const combinedClasses = computed(() => {
-  const classes: { [key: string]: boolean } = {
-    'w-full': props.isFull
+const buttonClass = computed(() => {
+  switch (props.variation) {
+    case 'outlined':
+      return 'py-1 px-2 inline-block bg-transparent text-primary rounded-lg border border-primary hover:brightness-110'
+    case 'flat':
+      return 'inline-block text-primary hover:brightness-110 underline hover:no-underline'
+    default:
+      return 'py-1 px-2 inline-block bg-primary text-white rounded-lg hover:brightness-110'
   }
-  if (props.classes) {
-    classes[props.classes] = true;
-  }
-  return classes;
 })
 </script>
 <template>
-  <button :class="[defaultClasses, combinedClasses]" :type="props.type">
+  <button :class="buttonClass" :type="props.type">
     <span>{{ text }}</span>
   </button>
 </template>

@@ -2,14 +2,16 @@
 import { useField } from 'vee-validate'
 import { toRefs, ref, toRef } from 'vue';
 type Props = {
-    type: string
+    type?: string
     value?: string
     placeholder?: string
     label?: string
     name: string
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+    type: 'text'
+})
 
 // const inputName = computed(() => props.name ?? '')
 

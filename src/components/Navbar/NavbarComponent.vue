@@ -92,7 +92,7 @@ watch(currentUser, async () => {
                     <CartIcon :is-home="isHome" />
                 </RouterLink>
                 <ProfileIcon class="cursor-pointer" @click="showProfile" :is-home="isHome" />
-                <ModalMain :status="authModalStatus" @close-modal="toggleAuthModal()" header-title="Войти в аккаунт">
+                <ModalMain :status="authModalStatus" @close-modal="toggleAuthModal()">
                     <ModalAuth @toggleModal="toggleAuthModal()" />
                 </ModalMain>
             </div>
