@@ -1,129 +1,90 @@
 <script setup lang="ts">
-import { computed, ref, toRefs } from 'vue';
-import { useRest } from '@/services';
-import { type Product, Instance } from '@/services/ProductRest';
-import { watchEffect } from 'vue';
+import { computed, ref, watchEffect } from 'vue';
+
 import { useRoute } from 'vue-router';
-import { useRouter } from 'vue-router';
-import { updateDoc, doc, arrayRemove, arrayUnion } from 'firebase/firestore';
-import { db } from '@/data';
-import { useProductsStore } from '@/stores/products'
-import { type UserObject, useUsersStore } from '@/stores/user';
 import { storeToRefs } from 'pinia';
+import { updateDoc, doc, arrayRemove, arrayUnion } from 'firebase/firestore';
+
+import { useRest } from '@/services';
+import { db } from '@/data';
+
+import { useProductsStore } from '@/stores/products'
+import { useUsersStore } from '@/stores/user';
+import { useModalsStore } from '@/stores/modal';
+
 import BreadCrumbs from "@/components/BreadCrumbs.vue"
-import CustomButton from '@/components/Custom/CustomButton.vue';
-import { auth } from "@/data"
+import ProductDetails from "@/components/Product/ProductDetails.vue"
+import ProductSkeleton from "@/components/Product/ProductSkeleton.vue"
 
 const route = useRoute()
 const api = useRest()
 
+const modalsStore = useModalsStore()
+const usersStore = useUsersStore()
 const { product } = storeToRefs(useProductsStore())
-const { updateUser } = useUsersStore()
-const { user, currentUser } = storeToRefs(useUsersStore())
+const { toggleAuthModal } = modalsStore
+const { updateUser } = usersStore
+const { user, currentUser } = storeToRefs(usersStore)
 
 const isLoading = ref(false)
 
 const isInCart = computed(() => user.value?.cart.map(String).includes(String(product.value.id)) ?? false)
 const isInWishlist = computed(() => user.value?.wishlist.map(String).includes(String(product.value.id)) ?? false)
 
-const showWishlistStatus = computed(() => isInWishlist.value ? "In Wishlist" : "Add to Wishlist")
-const showCartStatus = computed(() => isInCart.value ? "In Cart" : "Add to Cart") 
+const wishlistStatus = computed(() => isInWishlist.value ? "In Wishlist" : "Add to Wishlist")
+const cartStatus = computed(() => isInCart.value ? "In Cart" : "Add to Cart")
 
-const addToWishlist = async () => {
-  if (isInWishlist) {
+const updateList = async (listType: 'wishlist' | 'cart') => {
+  if (user.value) {
+    const isInList = listType === 'wishlist' ? isInWishlist : isInCart;
+
+    if (isInList.value) {
+      try {
+        await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
+          [listType]: arrayRemove(product.value.id)
+        })
+        await updateUser()
+      } catch (error) {
+        console.error(error)
+      }
+      return
+    }
     try {
+      console.log(currentUser.value)
       await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
-        wishlist: arrayRemove(product.value.id)
+        [listType]: arrayUnion(product.value.id)
       })
       await updateUser()
     } catch (error) {
       console.error(error)
     }
-    return
+    console.log(product.value.id, currentUser.value?.uid)
+  } else {
+    toggleAuthModal()
   }
-  try {
-    console.log(currentUser.value)
-    await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
-      wishlist: arrayUnion(product.value.id)
-    })
-    await updateUser()
-  } catch (error) {
-    console.error(error)
-  }
-  console.log(product.value.id, currentUser.value?.uid)
 }
 
-const addToCart = async () => {
-  if (isInCart) {
-    try {
-      await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
-        cart: arrayRemove(product.value.id)
-      })
-      await updateUser()
-    } catch (error) {
-      console.error(error)
-    }
-    return
-  }
-  try {
-    console.log(currentUser.value)
-    await updateDoc(doc(db, "users", currentUser.value?.uid as string), {
-      cart: arrayUnion(product.value.id)
-    })
-    await updateUser()
-  } catch (error) {
-    console.error(error)
-  }
-  console.log(product.value.id, currentUser.value?.uid)
-}
-
-
+const addToWishlist = () => updateList('wishlist');
+const addToCart = () => updateList('cart');
 
 watchEffect(async () => {
-    try {
-        isLoading.value = true
-        const res = await api.product.getProduct(route.params.id as string)
-        product.value = res
-        
-    } catch (error) {
-        console.error(error)
-    } finally {
-        isLoading.value = false
-    }
+  try {
+    isLoading.value = true
+    const res = await api.product.getProduct(route.params.id as string)
+    product.value = res
+  } catch (error) {
+    console.error(error)
+  } finally {
+    isLoading.value = false
+  }
 })
 
 </script>
 <template>
-    <div class="my-20 mx-40">
-        <BreadCrumbs v-if="product.category" :category="product.category" :product="product.title" />
-        <div v-if="!isLoading" class="flex max-w-4xl gap-14 items-center mt-8 m-auto">
-            <img class="image w-96 h-96" :src="product.image" alt="">
-
-            <div class="">
-                <h2 class="text-4xl">{{ product.title }}</h2>
-                <p class="text-grey">- {{ product.category }}</p>
-                <p class="description">{{ product.description }}</p>
-                <div class="flex gap-2">
-                    <CustomButton class="mt-2" type="button" @click="addToWishlist" :text="showCartStatus" />
-                    <CustomButton class="mt-2" type="button" @click="addToCart" :text="showWishlistStatus" />
-                </div>
-            </div>
-        </div>
-        <div v-else class="flex max-w-4xl gap-14 items-center mt-32 m-auto">
-            <div class="loading w-80 h-80" />
-            <div class="flex flex-col gap-3">
-                <div class="text-4xl loading w-80 h-6"></div>
-                <p class="loading w-80 h-6"></p>
-                <p class="description loading w-80 h-2"></p>
-                <p class="description loading w-72 h-2"></p>
-                <p class="description loading w-80 h-2"></p>
-                <p class="description loading w-64 h-2"></p>
-                <p class="description loading w-64 h-2"></p>
-                <p class="description loading w-72 h-2"></p>
-                <p class="description loading w-56 h-2"></p>
-                <p class="description loading w-64 h-2"></p>
-                <p class="description loading w-64 h-2"></p>
-            </div>
-        </div>
-    </div>
+  <div class="my-20 mx-40">
+    <BreadCrumbs v-show="product.category" :category="product.category" :product="product.title" />
+    <ProductSkeleton v-if="isLoading" />
+    <ProductDetails v-else @add-to-cart="addToCart" @add-to-wishlist="addToWishlist" :wishlist-status="wishlistStatus"
+      :cart-status="cartStatus" :product="product" />
+  </div>
 </template>

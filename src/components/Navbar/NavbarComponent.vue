@@ -6,7 +6,10 @@ import { db, auth } from "@/data";
 import { getDocs, collection } from "firebase/firestore";
 import { storeToRefs } from "pinia";
 import { useToggle } from "@vueuse/core";
+
 import { useUsersStore } from "@/stores/user"
+import { useModalsStore } from "@/stores/modal";
+
 import { RouteNames } from '@/router/routeNames';
 
 import NavbarSearch from '@/components/Navbar/NavbarSearch.vue';
@@ -19,16 +22,19 @@ import CartIcon from "@/assets/icons/CartIcon.vue"
 import ProfileIcon from "@/assets/icons/ProfileIcon.vue"
 import LogoIcon from "@/assets/icons/LogoIcon.vue"
 
-const navigationHistory = ref(history.get())
 const route = useRoute()
 const router = useRouter()
 
 const userStore = useUsersStore()
-const {updateUser} = userStore
+const modalsStore = useModalsStore()
+
+const { updateUser } = userStore
+const { toggleAuthModal } = modalsStore
 const { currentUser, user } = storeToRefs(userStore)
+const { authModalStatus } = storeToRefs(modalsStore)
+
 const isHome = computed(() => route.name === RouteNames.HOME)
 
-const [authModalStatus, toggleAuthModal] = useToggle()
 
 const showProfile = () => {
     onAuthStateChanged(getAuth(), (user) => {
@@ -42,9 +48,9 @@ const showProfile = () => {
 
 watch(currentUser, async () => {
     onAuthStateChanged(getAuth(), (user) => {
-        if (!user) {
-            router.push("/")
-        }
+        // if (!user) {
+        //     router.push("/")
+        // }
         if (auth.currentUser) {
             currentUser.value = auth.currentUser
         }
@@ -85,7 +91,7 @@ watch(currentUser, async () => {
                 <RouterLink :to="{ name: RouteNames.CART }">
                     <CartIcon :is-home="isHome" />
                 </RouterLink>
-                <ProfileIcon @click="showProfile" :is-home="isHome" />
+                <ProfileIcon class="cursor-pointer" @click="showProfile" :is-home="isHome" />
                 <ModalMain :status="authModalStatus" @close-modal="toggleAuthModal()" header-title="Войти в аккаунт">
                     <ModalAuth @toggleModal="toggleAuthModal()" />
                 </ModalMain>
