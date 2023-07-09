@@ -28,15 +28,18 @@ const { user, currentUser } = storeToRefs(usersStore)
 
 const isLoading = ref(false)
 
-const isInCart = computed(() => user.value?.cart.map(String).includes(String(product.value.id)) ?? false)
-const isInWishlist = computed(() => user.value?.wishlist.map(String).includes(String(product.value.id)) ?? false)
+const isInCart = computed(() => user.value?.cart ? user.value?.cart.map(String).includes(String(product.value.id)) : false)
+const isInWishlist = computed(() => user.value?.wishlist ? user.value?.wishlist.map(String).includes(String(product.value.id)) : false)
 
 const wishlistStatus = computed(() => isInWishlist.value ? "In Wishlist" : "Add to Wishlist")
 const cartStatus = computed(() => isInCart.value ? "In Cart" : "Add to Cart")
 
+const wishListVariation = computed(() => isInWishlist.value ? "outlined" : "default")
+const cartVariation = computed(() => isInCart.value ? "outlined" : "default")
+
 const updateList = async (listType: 'wishlist' | 'cart') => {
   if (user.value) {
-    const isInList = listType === 'wishlist' ? isInWishlist : isInCart;
+    const isInList = listType === 'wishlist' ? isInWishlist : isInCart
 
     if (isInList.value) {
       try {
@@ -82,9 +85,10 @@ watchEffect(async () => {
 </script>
 <template>
   <div class="my-20 mx-40">
-    <BreadCrumbs v-show="product.category" :category="product.category" :product="product.title" />
+    <BreadCrumbs v-if="product.category" :category="product.category" :product="product.title" />
     <ProductSkeleton v-if="isLoading" />
     <ProductDetails v-else @add-to-cart="addToCart" @add-to-wishlist="addToWishlist" :wishlist-status="wishlistStatus"
-      :cart-status="cartStatus" :product="product" />
+      :cart-status="cartStatus" :product="product" :wishlist-variation="wishListVariation"
+      :cart-variation="cartVariation" :is-in-cart="isInCart" :is-in-wishlist="isInWishlist" />
   </div>
 </template>

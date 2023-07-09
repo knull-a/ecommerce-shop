@@ -85,12 +85,6 @@ watch(currentUser, async () => {
             </div>
             <div class="flex items-center gap-3">
                 <NavbarSearch :is-home="isHome" />
-                <RouterLink :to="{ name: RouteNames.WISHLIST }">
-                    <HeartIcon :is-home="isHome" />
-                </RouterLink>
-                <RouterLink :to="{ name: RouteNames.CART }">
-                    <CartIcon :is-home="isHome" />
-                </RouterLink>
                 <ProfileIcon class="cursor-pointer" @click="showProfile" :is-home="isHome" />
                 <ModalMain :status="authModalStatus" @close-modal="toggleAuthModal()">
                     <ModalAuth @toggleModal="toggleAuthModal()" />

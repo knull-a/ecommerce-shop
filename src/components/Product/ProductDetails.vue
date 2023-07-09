@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import type { Product } from '@/services/ProductRest';
-import CustomButton from "@/components/Custom/CustomButton.vue"
+import CustomButton, { type Variation } from "@/components/Custom/CustomButton.vue"
+import HeartIcon from '@/assets/icons/HeartIcon.vue';
+import CartIcon from '@/assets/icons/CartIcon.vue';
 
 type Props = {
   product: Product
   cartStatus: string
   wishlistStatus: string
+  cartVariation: Variation
+  wishlistVariation: Variation
+  isInCart: boolean
+  isInWishlist: boolean
 }
 
 type Emits = {
@@ -25,8 +31,10 @@ defineProps<Props>()
       <p class="text-grey">- {{ product.category }}</p>
       <p class="description">{{ product.description }}</p>
       <div class="flex gap-2">
-        <CustomButton class="mt-2" type="button" @click="emits('addToWishlist')" :text="cartStatus" />
-        <CustomButton class="mt-2" type="button" @click="emits('addToCart')" :text="wishlistStatus" />
+        <CustomButton :active="isInCart" :icon="CartIcon" :variation="cartVariation" class="mt-2"
+          @click="emits('addToCart')" :text="cartStatus" />
+        <CustomButton :active="!isInWishlist" :icon="HeartIcon" icon-color="white" :variation="wishlistVariation"
+          class="mt-2" @click="emits('addToWishlist')" :text="wishlistStatus" />
       </div>
     </div>
   </div>

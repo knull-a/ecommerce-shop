@@ -3,6 +3,7 @@ import { type Product } from '@/services/ProductRest';
 import { RouteNames } from '@/router/routeNames';
 
 import HeartAnimatedIcon from '@/assets/icons/HeartAnimatedIcon.vue';
+import HeartIcon from '@/assets/icons/HeartIcon.vue';
 
 type Props = {
   products: Product[]
@@ -23,9 +24,9 @@ const emits = defineEmits<Emits>()
       @mouseleave="card.isHovering = false">
       <div>
         <img class="h-[200px] w-[350px] object-contain m-auto" :src="card.image" alt="Card Item">
-        <button class="absolute -top-10 right-0" @click.prevent="emits('addToWishlist', card)"
+        <button class="absolute top-0 right-10" @click.prevent="emits('addToWishlist', card)"
           :style="{ opacity: card.isHovering ? 1 : 0 }">
-          <HeartAnimatedIcon :is-active="card.isInWishlist" />
+          <HeartIcon :is-active="card.isInWishlist" />
         </button>
       </div>
 
@@ -34,5 +35,3 @@ const emits = defineEmits<Emits>()
     </RouterLink>
   </div>
 </template>
-<style scoped>
-</style>

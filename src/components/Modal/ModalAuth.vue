@@ -21,16 +21,16 @@ const router = useRouter()
 
 const isSignUp = ref(false)
 const loginStatus = computed(() => isSignUp.value ? 'Sign Up' : 'Sign In')
-const loginOppositeStatus = computed(() => isSignUp.value? 'Sign In' : 'Sign Up')
+const loginOppositeStatus = computed(() => isSignUp.value ? 'Sign In' : 'Sign Up')
 
 const validationSchema =
   yup.object().shape({
     email: yup.string().required().email(),
     password: yup.string().min(6).required(),
   })
-  // confirm_password: yup.string()
-  //   .required()
-  //   .oneOf([yup.ref('password')], 'Passwords do not match'),
+// confirm_password: yup.string()
+//   .required()
+//   .oneOf([yup.ref('password')], 'Passwords do not match'),
 
 const { handleSubmit } = useForm({
   validationSchema
@@ -55,7 +55,7 @@ const onSubmit = handleSubmit((values) => {
   <div>
     <h3 class="text-lg mb-2 font-bold">{{ loginStatus }}</h3>
     <form class="flex flex-col gap-3" @submit="onSubmit" :validation-schema="validationSchema">
-      <CustomInput placeholder="Username" type="text" name="username" />
+      <CustomInput v-show="isSignUp" placeholder="Username" type="text" name="username" />
       <CustomInput placeholder="Email" type="email" name="email" />
       <CustomInput placeholder="Password" type="password" name="password" />
       <CustomInput v-show="isSignUp" placeholder="Confirm password" type="password" name="confirm_password" />
@@ -69,11 +69,10 @@ const onSubmit = handleSubmit((values) => {
         </div>
       </div>
       <CustomButton type="submit" text="Confirm" is-full />
-      <CustomButton variation="outlined" text="Continue with Google"
-        is-full />
+      <CustomButton variation="outlined" text="Continue with Google" is-full />
       <div>
         <span class="mr-1">Not registered yet?</span>
-        <CustomButton @click="isSignUpToggle" variation="flat" :text="loginOppositeStatus"/>
+        <CustomButton @click="isSignUpToggle" variation="flat" :text="loginOppositeStatus" />
       </div>
     </form>
   </div>

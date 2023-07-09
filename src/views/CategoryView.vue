@@ -87,8 +87,8 @@ watchEffect(async () => {
 </script>
 <template>
   <div class="mt-20 max-w-6xl m-auto">
-    <CategorySkeleton v-if="isLoading" />
-    <CategoryDetails v-else :routeName="routeName" :products="products" @add-to-wishlist="addToWishlist" />
+    <CategoryDetails v-if="products.length" :routeName="routeName" :products="products" @add-to-wishlist="addToWishlist" />
+    <CategorySkeleton v-else />
   </div>
 </template>
 <style scoped>
