@@ -23,14 +23,14 @@ const emits = defineEmits<Emits>()
 defineProps<Props>() 
 </script>
 <template>
-  <div class="flex max-w-4xl gap-14 items-center mt-8 m-auto">
-    <img class="image w-96 h-96" :src="product.image" alt="">
+  <div class="flex flex-col md:flex-row gap-14 items-center mt-8 max-w-4xl m-auto">
+    <img class="object-contain w-96 h-96" :src="product.image" alt="">
 
-    <div>
+    <div class="text-center md:text-left">
       <h2 class="text-4xl">{{ product.title }}</h2>
       <p class="opacity-60">- {{ product.category }}</p>
       <p class="description">{{ product.description }}</p>
-      <div class="flex gap-2">
+      <div class="flex flex-col sm:flex-row md:justify-start justify-center gap-2">
         <CustomButton :active="isInCart" :icon="CartIcon" :variation="cartVariation" class="mt-2"
           @click="emits('addToCart')" :text="cartStatus" />
         <CustomButton :active="!isInWishlist" :icon="HeartIcon" icon-color="white" :variation="wishlistVariation"

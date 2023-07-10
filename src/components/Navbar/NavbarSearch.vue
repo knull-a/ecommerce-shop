@@ -54,14 +54,14 @@ watch(searchField, () =>
 onClickOutside(list, () => isOpened.value = false)
 </script>
 <template>
-  <div :class="{ 'text-white': isHome }" class="rounded-md w-48">
+  <div :class="{ 'text-white': isHome }" class="rounded-md w-24 md:w-48">
     <div class="input-opacity flex gap-1 items-center rounded-lg mb-1">
       <SearchIcon :is-home="isHome" class=" ml-1" />
       <input :class="{ 'placeholder:text-white': isHome }"
         class="placeholder:text-primary bg-transparent w-full outline-none rounded-md py-1 px-1" type="text"
         v-model="searchField" placeholder="Search" />
     </div>
-    <div class="absolute input-opacity w-48 max-h-32 rounded-lg overflow-x-hidden" ref="list">
+    <div class="absolute bg-white w-48 max-h-32 rounded-lg overflow-x-hidden" ref="list">
       <div v-show="isLoading" class="py-2 px-3">Loading...</div>
       <div v-show="isOpened">
         <div @click="pushToProduct(product.id, product.category)"

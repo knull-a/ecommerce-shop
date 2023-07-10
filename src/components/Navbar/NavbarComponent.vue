@@ -34,7 +34,9 @@ const { currentUser, user } = storeToRefs(userStore)
 const { authModalStatus } = storeToRefs(modalsStore)
 
 const isHome = computed(() => route.name === RouteNames.HOME)
+const menuColor = computed(() => isHome.value ? "bg-white" : "bg-primary")
 
+const [isMenuOpened, openMenu] = useToggle()
 
 const showProfile = () => {
     onAuthStateChanged(getAuth(), (user) => {
@@ -63,8 +65,15 @@ watch(currentUser, async () => {
 </script>
 <template>
     <div class="relative border-b-1">
-        <div :class="{ 'text-white': isHome }" class="fixed w-full z-40 top-0 flex justify-between items-center py-2 px-5">
-            <div class="flex gap-6">
+        <div :class="{ 'text-white': isHome, 'bg-white': !isHome }"
+            class="fixed w-full z-40 top-0 flex justify-between items-center py-2 px-5">
+            <div class="space-y-2 md:hidden block" @click="openMenu()">
+                <div class="w-8 h-0.5 bg-primary" :class="menuColor"></div>
+                <div class="w-8 h-0.5 bg-primary" :class="menuColor"></div>
+                <div class="w-8 h-0.5 bg-primary" :class="menuColor"></div>
+            </div>
+            <div class="absolute top-20 md:relative flex-col md:flex md:opacity-100 md:top-auto md:flex-row md:items-center gap-6 p-2 rounded-lg"
+                :class="{ 'flex': isMenuOpened, 'hidden': !isMenuOpened, 'bg-white': !isHome }" @click="openMenu()">
                 <RouterLink :to="{ name: RouteNames.MENS }">
                     {{ RouteNames.MENS }}
                 </RouterLink>

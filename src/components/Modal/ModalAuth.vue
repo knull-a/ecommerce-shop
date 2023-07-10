@@ -119,7 +119,7 @@ const signInWithGoogle = async () => {
       <CustomInput placeholder="Password" type="password" name="password" />
       <CustomInput v-show="isSignUp" placeholder="Confirm password" type="password" name="confirm_password" />
       <p v-show="errorMessage" class="text-error">{{ errorMessage }}</p>
-      <div class="flex justify-between">
+      <div class="flex flex-col md:flex-row justify-between">
         <div class="flex items-center gap-1">
           <input type="checkbox" v-model="persisting" name="remember" id="remember">
           <label for="remember">Remember Me</label>

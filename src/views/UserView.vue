@@ -66,7 +66,7 @@ onMounted(async () => {
         <button @click="handleSignOut()">Logout</button>
       </div>
     </div>
-    <div class="flex gap-10">
+    <div class="flex flex-col md:flex-row gap-10">
       <div class="flex flex-col gap-4 m-auto max-w-lg text-center p-5">
         <h2 class="text-3xl font-bold">Wishlist</h2>
         <div v-if="user?.wishlist && user?.wishlist.length">
@@ -83,7 +83,7 @@ onMounted(async () => {
         <h2 class="text-3xl font-bold">Cart</h2>
         <div v-if="user?.cart && user?.cart.length">
           <RouterLink :to="{ name: useCapitalLetter(item.category), params: { id: item.id } }" v-for="item in cart" :key="item.id">
-            <img class="h-[200px] w-[170px] m-auto" :src="item.image" alt="Product">
+            <img class="h-[200px] w-[170px] object-contain m-auto" :src="item.image" alt="Product">
             <h3 class="text-2xl font-bold">{{ item.title }}</h3>
           </RouterLink>
         </div>

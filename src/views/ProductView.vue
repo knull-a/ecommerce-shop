@@ -84,7 +84,7 @@ watchEffect(async () => {
 
 </script>
 <template>
-  <div class="my-20 mx-40">
+  <div class="my-20 mx-5  m-auto">
     <BreadCrumbs v-if="product.category" :category="product.category" :product="product.title" />
     <ProductSkeleton v-if="isLoading" />
     <ProductDetails v-else @add-to-cart="addToCart" @add-to-wishlist="addToWishlist" :wishlist-status="wishlistStatus"

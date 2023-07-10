@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 gap-y-4 m-auto">
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-y-4 m-auto">
     <div v-for="card in 6">
       <div class="h-[200px] w-[350px] m-auto loading" />
       <div class="flex flex-col gap-1 mt-1 ">

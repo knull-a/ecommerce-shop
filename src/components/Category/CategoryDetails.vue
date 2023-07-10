@@ -18,7 +18,7 @@ defineProps<Props>()
 const emits = defineEmits<Emits>()
 </script>
 <template>
-  <div class="grid grid-cols-3 gap-y-4 m-auto">
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-y-4 m-auto">
     <RouterLink :to="{ name: routeName, params: { id: card.id } }" class="text-center relative"
       v-for="(card, idx) in products" :key="idx" @mouseenter="card.isHovering = true"
       @mouseleave="card.isHovering = false">
@@ -31,7 +31,7 @@ const emits = defineEmits<Emits>()
       </div>
 
       <p class="mt-2">{{ card.price }}$</p>
-      <p class="text-2xl font-bold">{{ card.title }}</p>
+      <p class="text-lg md:text-2xl font-bold text-ellipsis overflow-hidden">{{ card.title }}</p>
     </RouterLink>
   </div>
 </template>
