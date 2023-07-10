@@ -4,11 +4,6 @@ import { RouteNames } from "@/router/routeNames";
 
 export const routes: RouterOptions["routes"] = [
   {
-    path: "/auth",
-    name: RouteNames.AUTH,
-    component: () => import("@/views/AuthView.vue"),
-  },
-  {
     path: "/",
     name: RouteNames.HOME,
     component: () => import("@/views/HomeView.vue"),
@@ -47,7 +42,7 @@ export const routes: RouterOptions["routes"] = [
     component: () => import("@/views/CategoryView.vue"),
     props: {
       instance: Instance.Jewellery,
-      routeName: RouteNames.PRODUCT_JEWELLERY
+      routeName: RouteNames.PRODUCT_JEWELLERY,
     },
   },
   {
@@ -61,7 +56,7 @@ export const routes: RouterOptions["routes"] = [
     component: () => import("@/views/CategoryView.vue"),
     props: {
       instance: Instance.Electronics,
-      routeName: RouteNames.PRODUCT_ELECTRONICS
+      routeName: RouteNames.PRODUCT_ELECTRONICS,
     },
   },
   {
@@ -73,11 +68,6 @@ export const routes: RouterOptions["routes"] = [
     path: "/profile",
     name: RouteNames.PROFILE,
     component: () => import("@/views/UserView.vue"),
-  },
-  {
-    path: "/wishlist",
-    name: RouteNames.WISHLIST,
-    component: () => import("@/views/WishlistView.vue"),
   },
   {
     path: "/cart",

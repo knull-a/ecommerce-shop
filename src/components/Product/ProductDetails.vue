@@ -28,7 +28,7 @@ defineProps<Props>()
 
     <div>
       <h2 class="text-4xl">{{ product.title }}</h2>
-      <p class="text-grey">- {{ product.category }}</p>
+      <p class="opacity-60">- {{ product.category }}</p>
       <p class="description">{{ product.description }}</p>
       <div class="flex gap-2">
         <CustomButton :active="isInCart" :icon="CartIcon" :variation="cartVariation" class="mt-2"

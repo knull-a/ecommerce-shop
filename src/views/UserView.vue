@@ -3,7 +3,7 @@ import type { Product } from "@/services/ProductRest";
 
 import { onMounted, ref, computed } from "vue";
 import { storeToRefs } from "pinia";
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 
 import { auth, db } from "@/data"
 import { useUsersStore } from "@/stores/user"
@@ -12,6 +12,8 @@ import { useProductsStore } from "@/stores/products";
 import { onAuthStateChanged, getAuth, signOut, type User } from "firebase/auth";
 import { addDoc, collection, getDocs, type DocumentData } from "firebase/firestore"
 import SpinnerIcon from "@/assets/icons/SpinnerIcon.vue";
+import { RouteNames } from "@/router/routeNames";
+import { useCapitalLetter } from "@/helpers/useCapitalLetter";
 
 const isLoggedIn = ref(false)
 
@@ -54,11 +56,12 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div class="flex flex-col mt-28" v-if="currentUser && user">
+  <div class="flex flex-col mt-28" v-if="currentUser">
     <div class="m-auto max-w-3xl">
       <div class="border rounded-xl max-w-lg text-center p-5">
-        <div class=" w-12 h-12 bg-primary text-white m-auto rounded-full flex items-center justify-center text-3xl">{{
-          currentUser.email?.charAt(0) }}</div>
+        <div class=" w-12 h-12 bg-primary text-white m-auto rounded-full flex items-center justify-center text-3xl">
+          {{ currentUser.email?.charAt(0) }}
+        </div>
         <p class=" text-2xl font-bold">{{ currentUser.email }}</p>
         <button @click="handleSignOut()">Logout</button>
       </div>
@@ -67,10 +70,10 @@ onMounted(async () => {
       <div class="flex flex-col gap-4 m-auto max-w-lg text-center p-5">
         <h2 class="text-3xl font-bold">Wishlist</h2>
         <div v-if="user?.wishlist && user?.wishlist.length">
-          <div class="" v-for="item in wishlist" :key="item.id">
+          <RouterLink :to="{ name: useCapitalLetter(item.category), params: { id: item.id } }" v-for="item in wishlist" :key="item.id">
             <img class="h-[200px] w-[350px] m-auto object-contain" :src="item.image" alt="Product">
             <h3 class="text-2xl font-bold">{{ item.title }}</h3>
-          </div>
+          </RouterLink>
         </div>
         <div v-else>
           Wishlist is empty
@@ -79,10 +82,10 @@ onMounted(async () => {
       <div class="flex flex-col gap-4 m-auto max-w-lg text-center p-5">
         <h2 class="text-3xl font-bold">Cart</h2>
         <div v-if="user?.cart && user?.cart.length">
-          <div class="" v-for="item in cart" :key="item.id">
+          <RouterLink :to="{ name: useCapitalLetter(item.category), params: { id: item.id } }" v-for="item in cart" :key="item.id">
             <img class="h-[200px] w-[170px] m-auto" :src="item.image" alt="Product">
             <h3 class="text-2xl font-bold">{{ item.title }}</h3>
-          </div>
+          </RouterLink>
         </div>
         <div v-else>
           Cart is empty

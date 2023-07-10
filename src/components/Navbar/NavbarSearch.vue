@@ -10,6 +10,7 @@ import { useRest } from '@/services';
 import type { Product } from '@/services/ProductRest';
 import { useRouter, type RouterLink } from 'vue-router';
 import { RouteNames } from '@/router/routeNames';
+import { useCapitalLetter } from "@/helpers/useCapitalLetter"
 
 type Props = {
   isHome: boolean
@@ -33,10 +34,9 @@ const searchField = ref('')
 const list = ref<HTMLDivElement>()
 
 const pushToProduct = (productId: number, productCategory: string) => {
-  const category = productCategory.split(' ')[0].charAt(0).toUpperCase() + productCategory.split(' ')[0].slice(1)
-  router.push({ name: category, params: { id: productId } })
+  router.push({ name: useCapitalLetter(productCategory), params: { id: productId } })
   isOpened.value = false
-  console.log(category)
+  console.log(useCapitalLetter(productCategory))
 }
 
 const filteredProducts = computed(() =>
@@ -64,9 +64,10 @@ onClickOutside(list, () => isOpened.value = false)
     <div class="absolute input-opacity w-48 max-h-32 rounded-lg overflow-x-hidden" ref="list">
       <div v-show="isLoading" class="py-2 px-3">Loading...</div>
       <div v-show="isOpened">
-        <div @click="pushToProduct(product.id, product.category)" class="cursor-pointer hover:backdrop-brightness-125 py-2 px-3"
-          v-for="product in filteredProducts" :key="product.id">
-          {{ product.title }} {{   }}
+        <div @click="pushToProduct(product.id, product.category)"
+          class="cursor-pointer hover:backdrop-brightness-125 py-2 px-3" v-for="product in filteredProducts"
+          :key="product.id">
+          {{ product.title }}
         </div>
       </div>
     </div>
