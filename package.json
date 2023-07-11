@@ -13,6 +13,7 @@
     "ionic:serve": "npm run dev"
   },
   "dependencies": {
+    "3": "^2.1.0",
     "@capacitor/android": "5.1.1",
     "@capacitor/app": "5.0.5",
     "@capacitor/cli": "5.1.1",
@@ -20,6 +21,7 @@
     "@capacitor/haptics": "5.0.5",
     "@capacitor/keyboard": "5.0.5",
     "@capacitor/status-bar": "5.0.5",
+    "@vue/compiler-sfc": "^3.3.4",
     "@vueuse/core": "^10.2.1",
     "axios": "^1.4.0",
     "eslint": "^8.44.0",

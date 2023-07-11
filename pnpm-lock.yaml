@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '3':
+    specifier: ^2.1.0
+    version: 2.1.0
   '@capacitor/android':
     specifier: 5.1.1
     version: 5.1.1(@capacitor/core@5.1.1)
@@ -26,6 +29,9 @@ dependencies:
   '@capacitor/status-bar':
     specifier: 5.0.5
     version: 5.0.5(@capacitor/core@5.1.1)
+  '@vue/compiler-sfc':
+    specifier: ^3.3.4
+    version: 3.3.4
   '@vueuse/core':
     specifier: ^10.2.1
     version: 10.2.1(vue@3.3.4)
@@ -114,6 +120,20 @@ devDependencies:
     version: 1.8.4(typescript@5.0.4)
 
 packages:
+
+  /2@1.0.2:
+    resolution: {integrity: sha512-G0Eca6Fz2qJKvjM9/niouz5kWTZy7pm+LRAMXir5v+DOt4bMszVlfIYKy2T+TPKnGxpp236pzK7/chNuToWlnQ==}
+    engines: {node: '>=7.0.0'}
+    dev: false
+
+  /3@2.1.0:
+    resolution: {integrity: sha512-rEoeK/qBZCLzqt9a3Q3Dnb5TUyXnZlxVaWr9ZXBV65Ppzcz59dx3Ik5YUxtni+36CtZgJdhQaYkLgHBdqjxjoA==}
+    engines: {node: '>=7.0.0'}
+    dependencies:
+      '2': 1.0.2
+      chunk-array: 1.0.2
+      enforce-range: 1.0.0
+    dev: false
 
   /@aashutoshrathi/word-wrap@1.2.6:
     resolution: {integrity: sha512-1Yjs2SvM8TflER/OD3cOjhWWOZb58A2t7wpE2S9XfBYTiIl+XFhQG2bjy4Pu1I+EAlCNUzRDYDdFwFYUKvXcIA==}
@@ -1774,6 +1794,10 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
+  /chunk-array@1.0.2:
+    resolution: {integrity: sha512-NdHMmQ59t0VOwG+md2fYfLbmeaN1ZeX+4rEKgOj2vqgJsuXyTvSgYLZ9jEU8xwmB4nm6DeuuAkU/Y67LpGlvHQ==}
+    dev: false
+
   /cliui@7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
     dependencies:
@@ -2025,6 +2049,12 @@ packages:
 
   /emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+    dev: false
+
+  /enforce-range@1.0.0:
+    resolution: {integrity: sha512-iOYthPljA5P/S823In8avtTbeUl8/uTP1+pqy08ryb8jeMO2enuIO/f72QFFqT4GTNiOe0yWPIzXB9nR3u6O5A==}
+    dependencies:
+      '2': 1.0.2
     dev: false
 
   /entities@4.5.0:
