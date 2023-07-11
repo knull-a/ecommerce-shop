@@ -1,0 +1,7 @@
+{
+  "name": "ecommerce-shop",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

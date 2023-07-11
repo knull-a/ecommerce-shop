@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { register } from 'swiper/element/bundle';
 import { RouteNames } from '@/router/routeNames';
-import { Pagination, Autoplay, Scrollbar } from 'swiper'
+import { Pagination, Autoplay, Scrollbar } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar'
@@ -13,16 +14,16 @@ const modules = [Pagination, Autoplay, Scrollbar];
   <div class="text-white text-4xl">
     <swiper :slides-per-view="1" :modules="modules" :autoplay="{ delay: 5000 }" :scrollbar="{ draggable: true }">
       <swiper-slide>
-        <RouterLink :to="{name: RouteNames.MENS}" class="swiper before:bg-mens">For Men</RouterLink>
+        <RouterLink :to="{ name: RouteNames.MENS }" class="swiper before:bg-mens">For Men</RouterLink>
       </swiper-slide>
       <swiper-slide>
-        <RouterLink :to="{name: RouteNames.WOMENS}" class="swiper before:bg-womens">For Women</RouterLink>
+        <RouterLink :to="{ name: RouteNames.WOMENS }" class="swiper before:bg-womens">For Women</RouterLink>
       </swiper-slide>
       <swiper-slide>
-        <RouterLink :to="{name: RouteNames.JEWELLERY}" class="swiper before:bg-jewellery">Jewellery</RouterLink>
+        <RouterLink :to="{ name: RouteNames.JEWELLERY }" class="swiper before:bg-jewellery">Jewellery</RouterLink>
       </swiper-slide>
       <swiper-slide>
-        <RouterLink :to="{name: RouteNames.ELECTRONICS}" class="swiper before:bg-electronics">Electronics
+        <RouterLink :to="{ name: RouteNames.ELECTRONICS }" class="swiper before:bg-electronics">Electronics
         </RouterLink>
       </swiper-slide>
     </swiper>

@@ -1,9 +1,8 @@
-import { RouteLocationNormalized } from "vue-router";
 
 export default {
-    history: [] as RouteLocationNormalized[],
+    history: [] as any,
   
-    push(route: RouteLocationNormalized) {
+    push<T>(route: T) {
       this.history.push(route);
     },
   
