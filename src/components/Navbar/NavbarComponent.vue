@@ -84,7 +84,7 @@ watch(currentUser, async () => {
                     {{ RouteNames.JEWELLERY }}
                 </RouterLink>
                 <RouterLink :to="{ name: RouteNames.ELECTRONICS }">
-                    {{ RouteNames.ELECTRONICS }}
+                    Abdu
                 </RouterLink>
             </div>
             <div class="text-2xl font-bold">

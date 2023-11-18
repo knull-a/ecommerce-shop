@@ -6,4 +6,5 @@ import { RouterView } from 'vue-router'
 <template>
   <NavbarComponent />
   <RouterView />
+  Test Abdu
 </template>
